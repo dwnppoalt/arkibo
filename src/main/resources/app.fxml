@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="org.arkibo.controllers.AppController">
+
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #333;">
+            <Button onAction="#goHome" text="Home" />
+            <Button onAction="#goSearch" text="Search" />
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane fx:id="content" />
+    </center>
+
+</BorderPane>

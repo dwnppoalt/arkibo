@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox alignment="CENTER"
+      spacing="10"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.arkibo.controllers.HomeController">
+
+    <Label text="HOME PAGE"/>
+    <Label text="This is home.fxml"/>
+
+</VBox>
