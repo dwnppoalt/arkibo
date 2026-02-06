@@ -1,14 +1,17 @@
 package org.arkibo;
 
-import org.arkibo.models.ThesisModels.Thesis;
-import org.arkibo.repository.ThesisRepository;
+import org.arkibo.services.StorageService;
+
+import com.backblaze.b2.client.exceptions.B2Exception;
 
 public class Test {
     public static void main(String[] args) {
-        ThesisRepository tr = new ThesisRepository();
-        Thesis thesis = tr.thesisInfo(4).data();
+        StorageService ss = new StorageService();
 
-        System.out.println(thesis.title());
-        System.out.println(thesis.abstractText());
+        try {
+            System.out.println(ss.getAccessLink("test"));
+        } catch (B2Exception e) {
+            e.printStackTrace();
+        }
     }
 }

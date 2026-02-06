@@ -15,7 +15,7 @@
     </top>
 
     <center>
-        <StackPane fx:id="content" />
+        <StackPane fx:id="content"/>
     </center>
 
 </BorderPane>
