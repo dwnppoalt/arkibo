@@ -6,9 +6,12 @@
 <VBox alignment="CENTER"
       spacing="10"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.arkibo.controllers.HomeController">
+      fx:id="root"
+      fx:controller="org.arkibo.controllers.HomeController"
+      styleClass="home">
 
-    <Label text="HOME PAGE"/>
+    <Label text="HOME PAGE" />
     <Label text="This is home.fxml"/>
+    <Label text="Font: Readex Pro"/>
 
 </VBox>
