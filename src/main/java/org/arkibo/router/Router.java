@@ -1,9 +1,13 @@
 package org.arkibo.router;
 
+import java.net.URL;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-// FULL SCREEN;
+
+import org.arkibo.utils.Logger;
+
 public class Router {
     private static StackPane content;
 
@@ -13,8 +17,10 @@ public class Router {
 
     public static void goTo(String fxml) {
         try {
+            URL url = Router.class.getResource("/" + fxml);
+            Logger.log("ROUTER", "URL Resource: " + url);
             Parent view = FXMLLoader.load(
-                    Router.class.getResource("/" + fxml)
+                url
             );
             content.getChildren().setAll(view);
         } catch (Exception e) {

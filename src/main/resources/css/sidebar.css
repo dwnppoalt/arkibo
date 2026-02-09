@@ -1,0 +1,16 @@
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Readex Pro Light";
+}
+
+.sidebar .button {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-cursor: hand;
+
+}
+
+.sidebar #title {
+    -fx-font-size: 25px;
+    -fx-font-family: "Montserrat Bold";
+    -fx-text-fill: linear-gradient(to right, #132c17 0%, #4d6528 50%, #a1ae1c 100%);
+}

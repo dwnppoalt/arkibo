@@ -2,31 +2,60 @@ package org.arkibo.app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+import org.arkibo.utils.FontLoader;
 import org.arkibo.utils.Logger;
 
 public class Main extends Application {
 
+    private static Stage primaryStage;
+
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app.fxml"));
-        Scene scene = new Scene(loader.load(), 800, 600);
 
-        Font montserrat = Font.loadFont(getClass().getResourceAsStream("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"), 14);
-        Font montserratItalic = Font.loadFont(getClass().getResourceAsStream("/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf"), 14);
-        Font readexPro = Font.loadFont(getClass().getResourceAsStream("/fonts/Readex Pro/ReadexPro-VariableFont_HEXP.ttf"), 14);
+        primaryStage = stage;
 
-        Logger.log("MAIN", montserrat.getFamily());
-        Logger.log("MAIN", montserratItalic.getFamily());
-        Logger.log("MAIN", readexPro.getFamily());
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/app.fxml"));
 
-        stage.setTitle("JavaFX Router Test");
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 800, 600);
+
+        FontLoader.loadFonts("/fonts");
+
+        // Enable F5 reload
+        enableReload(scene);
+
+        stage.setTitle("arkibo");
         stage.setScene(scene);
         stage.show();
         stage.setMaximized(true);
+    }
+
+    private void enableReload(Scene scene) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F5) {
+                reload();
+            }
+        });
+    }
+
+    private void reload() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/app.fxml"));
+
+            Parent newRoot = loader.load();
+            primaryStage.getScene().setRoot(newRoot);
+            Logger.log("MAIN", "UI Reloaded");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
