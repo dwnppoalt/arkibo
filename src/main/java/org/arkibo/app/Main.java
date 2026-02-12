@@ -53,11 +53,15 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/app.fxml"));
-
-            AppController controller = loader.getController();
-            controller.setAppState(appState);
-
             Parent newRoot = loader.load();
+            AppController controller = loader.getController();
+
+            if (controller == null) {
+                Logger.log("MAIN", "Warning: controller is null after loading app.fxml");
+            } else {
+                controller.setAppState(appState);
+            }
+            
             primaryStage.getScene().setRoot(newRoot);
             Logger.log("MAIN", "UI Reloaded");
 
