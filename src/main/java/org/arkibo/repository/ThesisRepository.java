@@ -19,7 +19,7 @@ import java.util.*;
 public class ThesisRepository {
     final DatabaseService db = new DatabaseService();
 
-    public Response<List<Thesis>> getUserSavedThesis(long userId) {
+    public Response<List<Thesis>> getUserSavedThesis(String userId) {
         String sql = """
         SELECT
             t.id             AS thesis_id,

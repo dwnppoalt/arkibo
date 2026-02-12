@@ -1,6 +1,6 @@
 package org.arkibo.app.state;
 
-import org.arkibo.models.User;
+import org.arkibo.models.User.User;
 
 public class UserSession {
     private User currentUser;
