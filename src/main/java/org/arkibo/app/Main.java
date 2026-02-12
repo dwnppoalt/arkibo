@@ -7,27 +7,32 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+import org.arkibo.app.state.AppState;
+import org.arkibo.controllers.AppController;
 import org.arkibo.utils.FontLoader;
 import org.arkibo.utils.Logger;
 
 public class Main extends Application {
 
     private static Stage primaryStage;
+    private AppState appState;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         primaryStage = stage;
+        appState = new AppState();
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/app.fxml"));
 
         Parent root = loader.load();
+        AppController controller = loader.getController();
+        controller.setAppState(appState);
         Scene scene = new Scene(root, 800, 600);
 
         FontLoader.loadFonts("/fonts");
 
-        // Enable F5 reload
         enableReload(scene);
 
         stage.setTitle("arkibo");
@@ -48,6 +53,9 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/app.fxml"));
+
+            AppController controller = loader.getController();
+            controller.setAppState(appState);
 
             Parent newRoot = loader.load();
             primaryStage.getScene().setRoot(newRoot);

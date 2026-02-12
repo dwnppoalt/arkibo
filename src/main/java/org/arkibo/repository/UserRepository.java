@@ -29,7 +29,7 @@ public class UserRepository {
             );
 
             if (id == null) return Response.error("[USER]: User already exists.");
-            User created = new User(id, user.name(), user.email(), null);
+            User created = new User(id, user.name(), user.email(), null, null);
             db.commit();
             return Response.success(String.format("[USER]: User %s added.", created.name()), created);
         } catch (SQLException e) {

@@ -15,6 +15,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import org.arkibo.app.state.AppState;
 import org.arkibo.router.Router;
 
 public class AppController {
@@ -34,6 +35,7 @@ public class AppController {
     @FXML
     private SidebarController sidebarController;
 
+    private AppState appState;
     private boolean isSidebarOpen = false;
     private static final double MAX_BLUR = 5;
     private final BoxBlur blur = new BoxBlur(MAX_BLUR, MAX_BLUR, 2);
@@ -44,8 +46,13 @@ public class AppController {
 
         paneOverlay.setOnMouseClicked(e -> toggleSidebar());
 
-        Router.init(content);
+        Router.init(content, appState);
         Router.goTo("views/home.fxml");
+    }
+
+    public void setAppState(AppState appState) {
+        this.appState = appState;
+        Router.init(content, appState);
     }
 
     @FXML
