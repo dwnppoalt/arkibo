@@ -3,7 +3,6 @@ package org.arkibo.controllers;
 import org.arkibo.app.auth.AuthService;
 import org.arkibo.app.state.AppState;
 import org.arkibo.app.state.StatefulController;
-import org.arkibo.app.state.UserSession;
 import org.arkibo.models.User.User;
 import org.arkibo.router.Router;
 import org.arkibo.utils.Logger;

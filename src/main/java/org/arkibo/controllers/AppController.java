@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.effect.BoxBlur;
 
 import javafx.animation.TranslateTransition;
-import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
