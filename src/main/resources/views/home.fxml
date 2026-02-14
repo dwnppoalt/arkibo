@@ -11,7 +11,12 @@
       styleClass="home">
 
     <Label text="HOME PAGE" />
+<<<<<<< HEAD
     <Button text="This is home.fxml"/>
     <Label text="Font: Readex Pro"/>
+=======
+    <Label fx:id="userNameLabel" text="Loading..." />
+    <Label fx:id="userEmailLabel" text="" />
+>>>>>>> origin/main
 
 </VBox>

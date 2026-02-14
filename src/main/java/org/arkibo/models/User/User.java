@@ -1,13 +1,13 @@
-package org.arkibo.models;
+package org.arkibo.models.User;
 
 import org.arkibo.models.ThesisModels.Thesis;
 
-import java.util.Optional;
 import java.util.List;
 
 public record User(
-        long id,
+        String id,
         String name,
         String email,
-        Optional<List<Thesis>> savedTheses
+        String imageUrl,
+        List<Thesis> savedTheses
 ) {}
