@@ -7,11 +7,13 @@
       <VBox alignment="CENTER"
       prefHeight="400.0"
       prefWidth="600.0"
-      stylesheets="@resources/css/login.css"
+      stylesheets="@/css/login.css"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.arkibo.controllers.LoginController"
       styleClass="background">
-
+<!-- what's up now -->
+<!-- theree
+ -->
          <children>
             <Label alignment="CENTER" prefHeight="34.0" prefWidth="108.0" styleClass="title" text="arkibo" textAlignment="CENTER" />
             <Label alignment="CENTER" styleClass="subtitle" text="CLSU Archives" />
