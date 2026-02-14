@@ -11,7 +11,7 @@
       styleClass="home">
 
     <Label text="HOME PAGE" />
-    <Label text="This is home.fxml"/>
+    <Button text="This is home.fxml"/>
     <Label text="Font: Readex Pro"/>
 
 </VBox>
