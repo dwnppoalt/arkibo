@@ -10,5 +10,6 @@
 
     <Label text="SEARCH PAGE"/>
     <Label text="This is search.fxml"/>
+    <Label text="..." fx:id="searchLabel"/>
 
 </VBox>
