@@ -1,8 +1,9 @@
 .background {
-    -fx-background-color:
-    radial-gradient(circle at 20% 20%, #132c17, transparent 50%),
-    radial-gradient(circle at 80% 30%, #4d6528, transparent 50%),
-    radial-gradient(circle at 50% 80%, #a1ae1c, transparent 50%);
+    -fx-background-image: url("../images/background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: 100% 100%;
+    -fx-background-insets: 0;
 }
 
 .title {
@@ -13,9 +14,9 @@
 }
 
 .subtitle {
-   -fx-font-size: 16px;
-   -fx-font-family: "Readex Pro";
-   -fx-text-fill: #ffffff;  
+    -fx-font-size: 16px;
+    -fx-font-family: "Readex Pro";
+    -fx-text-fill: #ffffff;
 }
 
 .button {
@@ -28,10 +29,10 @@
 .button.google {
     -fx-background-color: #ffffff;
     -fx-background-radius: 25;
-    -fx-text-fill:  #132c17;
+    -fx-text-fill: #132c17;
 }
 
 .button.guest {
-   -fx-background-color: rgba(0, 0, 0, 0);
-   -fx-text-fill:  #ffffff;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-text-fill: #ffffff;
 }
