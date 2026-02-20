@@ -20,7 +20,10 @@ public class LoginController implements StatefulController {
     private VBox login;
 
     @FXML
-    private Button loginButton;
+    private Button googleLogin;
+
+    @FXML
+    private Button guestLogin;
 
     @Override
     public void setAppState(AppState appState) {
@@ -33,12 +36,12 @@ public class LoginController implements StatefulController {
         login.getStylesheets().add(
                 getClass().getResource("/css/login.css").toExternalForm());
         
-        loginButton.setOnMouseClicked(e -> Logger.log("LOGIN", "Mouse clicked"));
+        googleLogin.setOnMouseClicked(e -> Logger.log("LOGIN", "Mouse clicked"));
 
     }
 
     @FXML
-    private void loginButtonOnClick() {
+    private void googleButtonOnClick() {
         Logger.log("LOGIN-CONTROLLER", "Logging in...");
             new Thread(() -> {
                 try {
@@ -53,5 +56,13 @@ public class LoginController implements StatefulController {
                 e.printStackTrace();
             }
         }).start();
+    }
+    
+
+    @FXML
+    private void guestButtonOnClick() {
+        User user = new User("-1", "Guest User", null, null, null);
+        appState.getUserSession().set(user);
+        Router.goTo("views/home.fxml");
     }
 }
