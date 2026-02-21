@@ -52,7 +52,7 @@ public class AuthService {
 
         Desktop.getDesktop().browse(new URI(builder.build().toString()));
 
-        String authCode = codeFuture.get();
+        String authCode = codeFuture.get(30, java.util.concurrent.TimeUnit.SECONDS);
 
         String idToken = exchangeCodeForIdToken(authCode, verifier);
 
@@ -86,6 +86,13 @@ public class AuthService {
         });
 
         server.start();
+
+        future.orTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+              .exceptionally(ex -> {
+                server.stop(0);
+                return null;
+              });
+              
         return future;
     }
 
