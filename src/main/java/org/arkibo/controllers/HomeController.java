@@ -2,11 +2,11 @@ package org.arkibo.controllers;
 
 import org.arkibo.app.state.AppState;
 import org.arkibo.app.state.StatefulController;
-import org.arkibo.models.User.User;
-import org.arkibo.utils.Logger;
+import org.arkibo.router.Router;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 public class HomeController implements StatefulController {
@@ -16,35 +16,28 @@ public class HomeController implements StatefulController {
     @Override
     public void setAppState(AppState appState) {
         this.appState = appState;
-        updateUserInfo();
     }
 
     @FXML
     private VBox root;
 
     @FXML
-    private Label userNameLabel;
-
-    @FXML
-    private Label userEmailLabel;
+    private TextField searchField;
 
     @FXML
     public void initialize() {
         root.getStylesheets().add(
             getClass().getResource("/css/home.css").toExternalForm()
         );
+        searchField.setOnKeyPressed(event -> {
+           if (event.getCode() == KeyCode.ENTER) searchButtonOnAction(); 
+        });
     }
 
-    private void updateUserInfo() {
-        if (appState != null && appState.getUserSession().isLoggedIn()) {
-            User user = appState.getUserSession().get();
-            userNameLabel.setText("loe po, " + user.name());
-            userEmailLabel.setText("email: " + user.email());
-            Logger.log("HOME", "image url: " + user.imageUrl());
-        } else {
-            userNameLabel.setText("Not logged in");
-            userEmailLabel.setText("");
-        }
+    @FXML
+    private void searchButtonOnAction() {
+        appState.getSearchState().setSearchQuery(searchField.getText());
+        Router.goTo("views/search.fxml");
     }
 
 }
