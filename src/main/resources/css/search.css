@@ -1,73 +1,59 @@
-/* Hahaha goodluck—sa 'yo ko ipagkakatiwala ang CSS. :) */
-
-#searchRoot {
+.root {
+    -fx-font-family: "Readex Pro";
+    -fx-background-color: #ffffff;
 }
 
-#sortByChoiceBox {
+.searchbar {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 1 0;
 }
 
-#researchTypeChoiceBox {
+.searchbar TextField {
+    -fx-pref-width: 400;
+    -fx-background-color: #f0f0f0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
-#collegeChoiceBox {
+.searchbar Button {
+    -fx-background-color: #132c17;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
 }
 
-#yearRangeChoiceBox {
+.filterspanel {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 4;
 }
 
-#applyFilterButton {
+.filterspanel Label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
 }
 
-#returnHomeButton {
+.filterspanel TextField {
+
+
 }
 
-#searchBarField {
+.resultspanel {
+    -fx-padding: 15;
+    -fx-spacing: 10;
 }
 
-#searchBarButton {
+.resultspanel Label {
+    -fx-font-size: 14;
 }
 
-#searchLabel {
-}
-
-#resultsLabel {
-}
-
-#resultsVBox {
-}
-
-#previousPaginationButton {
-}
-
-#nextPaginationButton {
-}
-
-.thesis-card {
-}
-
-.thesis-title {
-}
-
-.thesis-authors {
-}
-
-.thesis-year {
-}
-
-.thesis-college {
-}
-
-.thesis-abstract {
-}
-
-.thesis-keywords {
-}
-
-.keyword-badge {
-}
-
-.read-button {
-}
-
-.saved-button {
+.resultspanel ListView {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
