@@ -20,7 +20,8 @@ public class LoginController implements StatefulController {
     private VBox login;
 
     @FXML
-    private Button loginButton;
+    private Button loginButton; // our fx:id for the button is "loginButton", so we need
+                                // the variable to be named as "loginButton" :)
 
     @Override
     public void setAppState(AppState appState) {

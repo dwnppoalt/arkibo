@@ -1,0 +1,59 @@
+.root {
+    -fx-font-family: "Readex Pro";
+    -fx-background-color: #ffffff;
+}
+
+.searchbar {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 1 0;
+}
+
+.searchbar TextField {
+    -fx-pref-width: 400;
+    -fx-background-color: #f0f0f0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.searchbar Button {
+    -fx-background-color: #132c17;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+}
+
+.filterspanel {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 4;
+}
+
+.filterspanel Label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.filterspanel TextField {
+
+
+}
+
+.resultspanel {
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.resultspanel Label {
+    -fx-font-size: 14;
+}
+
+.resultspanel ListView {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}

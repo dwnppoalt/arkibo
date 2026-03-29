@@ -8,16 +8,15 @@
       prefHeight="400.0"
       prefWidth="600.0"
       stylesheets="@/css/login.css"
+      fx:id="login"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.arkibo.controllers.LoginController"
       styleClass="background">
-<!-- what's up now -->
-<!-- theree
- -->
+
          <children>
             <Label alignment="CENTER" prefHeight="34.0" prefWidth="108.0" styleClass="title" text="arkibo" textAlignment="CENTER" />
             <Label alignment="CENTER" styleClass="subtitle" text="CLSU Archives" />
-            <Button alignment="CENTER" mnemonicParsing="false" styleClass="button google" text="Sign in with Google" />
+            <Button alignment="CENTER" mnemonicParsing="false" styleClass="button google" text="Sign in with Google" fx:id="loginButton"/>
             <Label alignment="CENTER" text="or" style="fx-font-size: 12px;" />
             <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" styleClass="button guest" text="Sign in as guest" />
          </children>

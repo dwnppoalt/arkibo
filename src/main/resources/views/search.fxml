@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER"
-      spacing="10"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.arkibo.controllers.SearchController">
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.arkibo.controllers.SearchController"
+            stylesheets="@/css/search.css"
+            fx:id="search"
+            styleClass="background">
 
-    <Label text="SEARCH PAGE"/>
-    <Label text="This is search.fxml"/>
+    <top>
+        <HBox spacing="10" styleClass="searchbar">
+            <TextField fx:id="searchField" promptText="Search..."/>
+            <Button text="Search" fx:id="searchButton" styleClass="button"/>
+        </HBox>
+    </top>
 
-</VBox>
+    <left>
+        <VBox spacing="10" styleClass="filterspanel">
+            <Label text="Filters" styleClass="filterstitle"/>
+            <Label text="Sort by:"/>
+            <ChoiceBox fx:id="sortChoice"/>
+            <Label text="Research Type:"/>
+            <ChoiceBox fx:id="typeChoice"/>
+            <Label text="Year range:"/>
+            <TextField fx:id="yearFrom" promptText="From"/>
+            <TextField fx:id="yearTo" promptText="To"/>
+            <Button text="Apply filters" fx:id="applyFilters" styleClass="button"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="10" styleClass="resultspanel">
+            <Label text="Search Results" styleClass="resultstitle"/>
+            <ListView fx:id="resultsList" prefHeight="400" prefWidth="500"/>
+        </VBox>
+    </center>
+
+</BorderPane>
+

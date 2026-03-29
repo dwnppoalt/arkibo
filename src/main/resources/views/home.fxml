@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 
 <VBox alignment="CENTER"
       spacing="10"
@@ -10,13 +13,11 @@
       fx:controller="org.arkibo.controllers.HomeController"
       styleClass="home">
 
-    <Label text="HOME PAGE" />
-<<<<<<< HEAD
-    <Button text="This is home.fxml"/>
-    <Label text="Font: Readex Pro"/>
-=======
-    <Label fx:id="userNameLabel" text="Loading..." />
-    <Label fx:id="userEmailLabel" text="" />
->>>>>>> origin/main
-
+<Label text="arkibo" styleClass="title"/>
+    <Label text="Access a collection of research papers from Central Luzon State University." styleClass="tagline"/>
+    <HBox spacing="5" alignment="CENTER">
+        <TextField fx:id="searchField" promptText="Search..." styleClass="searchbar"/>
+        <Button text="Enter" fx:id="searchButton" styleClass="searchbutton"/>
+    </HBox>
 </VBox>
+
