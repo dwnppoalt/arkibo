@@ -14,6 +14,8 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import org.arkibo.app.state.AppState;
+import org.arkibo.repository.ThesisRepository;
+import org.arkibo.repository.UserRepository;
 import org.arkibo.router.Router;
 
 public class AppController {
@@ -32,6 +34,9 @@ public class AppController {
     private SidebarController sidebarController;
 
     private AppState appState;
+    private ThesisRepository thesisRepository;
+    private UserRepository userRepository;
+    
     private boolean isSidebarOpen = false;
     private static final double MAX_BLUR = 5;
     private final BoxBlur blur = new BoxBlur(MAX_BLUR, MAX_BLUR, 2);
@@ -46,6 +51,14 @@ public class AppController {
         this.appState = appState;
         Router.init(content, appState);
         Router.goTo("views/login.fxml");
+    }
+
+    public void setThesisRepository(ThesisRepository thesisRepository) {
+        this.thesisRepository = thesisRepository;
+    }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @FXML

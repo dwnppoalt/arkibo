@@ -10,5 +10,5 @@ public record Thesis(
         List<Keyword> keywords,
         int year,
         ResearchType researchType,
-        String college
+        College college
 ){}

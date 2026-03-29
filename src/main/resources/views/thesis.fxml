@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox alignment="CENTER"
+   xmlns="http://javafx.com/javafx/25"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.ThesisInfoController" fx:id="thesisRoot">
+   <children>
+      <Label text="thesis.fxml" />
+      <Label fx:id="thesisId" layoutX="294.0" layoutY="201.0" text="Label" />
+      <Label fx:id="thesisTitle" layoutX="294.0" layoutY="201.0" text="Label" />
+      <Label fx:id="thesisAbstract" layoutX="294.0" layoutY="201.0" text="Label" />
+   </children>
+</VBox>

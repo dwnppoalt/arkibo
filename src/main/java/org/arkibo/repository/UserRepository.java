@@ -13,23 +13,27 @@ public class UserRepository {
 
     public Response<User> addUser(UserCreateRequest user) {
         String sql = """
-        INSERT INTO users (name, email)
-        VALUES (?, ?)
-        ON CONFLICT (email) DO NOTHING
+        INSERT INTO users (id, name, email, image_url)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT (id) DO UPDATE
+        SET name = EXCLUDED.name,
+            email = EXCLUDED.email,
+            image_url = EXCLUDED.image_url
         RETURNING id
         """;
 
         try {
             db.begin();
-            Long id = db.query(
+            db.query(
                     sql,
-                    rs -> rs.next() ? rs.getLong("id") : null,
+                    rs -> rs.next() ? rs.getString("id") : null,
+                    user.id(),
                     user.name(),
-                    user.email()
+                    user.email(),
+                    user.imageUrl()
             );
 
-            if (id == null) return Response.error("[USER]: User already exists.");
-            User created = new User(id.toString(), user.name(), user.email(), null, null);
+            User created = new User(user.id(), user.name(), user.email(), user.imageUrl(), null);
             db.commit();
             return Response.success(String.format("[USER]: User %s added.", created.name()), created);
         } catch (SQLException e) {
@@ -44,7 +48,7 @@ public class UserRepository {
         }
     }
 
-    public Response<Void> addThesisToSaved(long userId, long thesisId) {
+    public Response<Void> addThesisToSaved(String userId, long thesisId) {
         String sql = """
                 INSERT INTO user_saved_theses (user_id, thesis_id)
                 VALUES (?, ?)
@@ -70,7 +74,7 @@ public class UserRepository {
         }
     }
 
-    public Response<Void> removeThesisFromSaved(long userId, long thesisId) {
+    public Response<Void> removeThesisFromSaved(String userId, long thesisId) {
         String sql = """
                 DELETE FROM user_saved_theses
                 WHERE user_id = ? AND thesis_id = ?""";
