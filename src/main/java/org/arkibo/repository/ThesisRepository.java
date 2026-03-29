@@ -1,9 +1,10 @@
 package org.arkibo.repository;
 
-import org.arkibo.dto.thesis.AuthorCreateReqeust;
+import org.arkibo.dto.thesis.AuthorCreateRequest;
 import org.arkibo.dto.thesis.KeywordCreateRequest;
 import org.arkibo.dto.thesis.ThesisCreateRequest;
 import org.arkibo.models.ThesisModels.Author;
+import org.arkibo.models.ThesisModels.College;
 import org.arkibo.models.ThesisModels.Keyword;
 import org.arkibo.models.ThesisModels.Thesis;
 import org.arkibo.models.ThesisModels.ResearchType;
@@ -58,11 +59,11 @@ public class ThesisRepository {
 
     public Response<Thesis> addThesis(ThesisCreateRequest thesis) {
         String title = thesis.title();
-        List<AuthorCreateReqeust> authors = thesis.authors();
+        List<AuthorCreateRequest> authors = thesis.authors();
         String abstractText = thesis.abstractText();
         List<KeywordCreateRequest> keywords = thesis.keywords();
         String researchType = thesis.researchType();
-        String college = thesis.college();
+        College college = thesis.college();
         int year = thesis.year();
         Long thesisId;
 
@@ -80,14 +81,14 @@ public class ThesisRepository {
                     """;
 
             thesisId = db.query(insertThesisQuery, rs -> rs.next() ? rs.getLong("id") : null,
-                    title, abstractText, year, researchType, college);
+                    title, abstractText, year, researchType, college.name());
             Logger.log("THESIS", "Inserted thesis " + thesisId);
 
 
             // Authors
             Logger.log("THESIS", "Author insert");
 
-            for (AuthorCreateReqeust author : authors) {
+            for (AuthorCreateRequest author : authors) {
                 String checkAuthorQuery = "SELECT id FROM authors WHERE name = ?";
                 Long authorId = db.query(checkAuthorQuery, rs -> rs.next() ? rs.getLong("id") : null, author.name());
                 if (authorId == null) {
@@ -161,7 +162,7 @@ public class ThesisRepository {
 
             db.commit();
             return Response.success("[THESIS]: Successfully added thesis",
-                    new Thesis(thesisId, title, abstractText, newAuthors, newKeywords, year, newType, college ));
+                    new Thesis(thesisId, title, abstractText, newAuthors, newKeywords, year, newType, College.valueOf(college.name()) ));
         } catch (SQLException e) {
             try {
                 Logger.log("THESIS", "Error " + e.getMessage() + ", rolling back");
@@ -248,7 +249,7 @@ public class ThesisRepository {
         }
     }
 
-    public Response<List<Thesis>> search(String query, Integer beforeYear, Integer afterYear, String type) {
+    public Response<List<Thesis>> search(String query, Integer beforeYear, Integer afterYear, String type, College college) {
         StringBuilder sql = new StringBuilder("""
             SELECT
                 t.id            AS thesis_id,
@@ -304,9 +305,16 @@ public class ThesisRepository {
         }
 
         if (type != null && !type.isBlank()) {
-            sql.append(" AND tt.name ILIKE ?");
+
+            sql.append(" AND t.research_type ILIKE ?");
             params.add("%" + type + "%");
         }
+
+        if (college != null && college != College.ALL) {
+            sql.append(" AND t.college ILIKE ?");
+            params.add("%" + college.name() + "%");
+        }
+
 
 
         try {
@@ -525,7 +533,7 @@ public class ThesisRepository {
                     List.copyOf(keywords),
                     year,
                     researchType,
-                    college
+                    College.valueOf(college)
             );
         }
     }

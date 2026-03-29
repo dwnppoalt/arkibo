@@ -7,13 +7,16 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
+import org.arkibo.dto.UserCreateRequest;
 import org.arkibo.models.User.GoogleUserInfo;
 import org.arkibo.models.User.User;
+import org.arkibo.models.ThesisModels.Thesis;
 import org.arkibo.repository.ThesisRepository;
-import org.arkibo.utils.PKCEUtil;
+import org.arkibo.repository.UserRepository;
 
 import com.google.gson.JsonParser;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -27,6 +30,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.Desktop;
+import java.util.List;
 
 public class AuthService {
     Dotenv dotenv = Dotenv.load();
@@ -34,8 +38,13 @@ public class AuthService {
     private final String CLIENT_SECRET = dotenv.get("GOOGLE_OAUTH_CLIENT_SECRET");
     private static final String REDIRECT_URI = "http://localhost:51743/callback";
 
-    private ThesisRepository thesisRepository = new ThesisRepository();
+    private ThesisRepository thesisRepository;
+    private UserRepository userRepository;
 
+    public AuthService(ThesisRepository thesisRepository, UserRepository userRepository) {
+        this.thesisRepository = thesisRepository;
+        this.userRepository = userRepository;
+    }
     public User login() throws Exception {
         String verifier = PKCEUtil.generateCodeVerifier();
         String challenge = PKCEUtil.generateCodeChallenge(verifier);
@@ -58,12 +67,27 @@ public class AuthService {
 
         GoogleUserInfo info = verifyIdToken(idToken);
 
+        userRepository.addUser(new UserCreateRequest(
+            info.getGoogleId(),
+            info.getName(),
+            info.getEmail(),
+            info.getPictureUrl()
+        ));
+
+        var thesisResult = thesisRepository.getUserSavedThesis(info.getGoogleId());
+        List<Thesis> savedTheses;
+        if (thesisResult == null || thesisResult.data() == null) {
+            savedTheses = new ArrayList<>();
+        } else {
+            savedTheses = thesisResult.data();
+        }
+
         return new User(
                 info.getGoogleId(),
                 info.getName(),
                 info.getEmail(),
                 info.getPictureUrl(),
-                thesisRepository.getUserSavedThesis(info.getGoogleId()).data());
+                savedTheses);
     }
 
     private CompletableFuture<String> startCallbackServer() throws IOException {

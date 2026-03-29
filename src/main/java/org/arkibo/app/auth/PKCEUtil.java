@@ -1,4 +1,4 @@
-package org.arkibo.utils;
+package org.arkibo.app.auth;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

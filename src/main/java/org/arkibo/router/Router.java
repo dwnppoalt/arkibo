@@ -8,11 +8,15 @@ import javafx.scene.layout.StackPane;
 
 import org.arkibo.app.state.AppState;
 import org.arkibo.app.state.StatefulController;
+import org.arkibo.repository.ThesisRepository;
+import org.arkibo.repository.UserRepository;
 import org.arkibo.utils.Logger;
 
 public class Router {
     private static StackPane content;
     private static AppState appState;
+    private static final ThesisRepository thesisRepository = new ThesisRepository();
+    private static final UserRepository userRepository = new UserRepository();
 
     public static void init(StackPane root, AppState state) {
         content = root;
@@ -27,9 +31,11 @@ public class Router {
             Parent view = loader.load();
 
             Object controller = loader.getController();
-            if (controller instanceof StatefulController) {
-                ((StatefulController) controller).setAppState(appState);
-            }
+                if (controller instanceof StatefulController) {
+                    ((StatefulController) controller).setThesisRepository(thesisRepository);
+                    ((StatefulController) controller).setUserRepository(userRepository);
+                    ((StatefulController) controller).setAppState(appState);
+                }
             
             content.getChildren().setAll(view);
         } catch (Exception e) {

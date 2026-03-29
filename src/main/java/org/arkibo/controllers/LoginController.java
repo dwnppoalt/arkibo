@@ -6,6 +6,8 @@ import org.arkibo.app.auth.AuthService;
 import org.arkibo.app.state.AppState;
 import org.arkibo.app.state.StatefulController;
 import org.arkibo.models.User.User;
+import org.arkibo.repository.ThesisRepository;
+import org.arkibo.repository.UserRepository;
 import org.arkibo.router.Router;
 import org.arkibo.utils.Logger;
 
@@ -16,8 +18,10 @@ import javafx.scene.control.Button;
 
 public class LoginController implements StatefulController {
 
-    private AuthService authService = new AuthService();
     private AppState appState;
+    private ThesisRepository thesisRepository;
+    private UserRepository userRepository;
+    private AuthService authService;
 
     @FXML
     private VBox login;
@@ -31,6 +35,17 @@ public class LoginController implements StatefulController {
     @Override
     public void setAppState(AppState appState) {
         this.appState = appState;
+    }
+
+    @Override
+    public void setThesisRepository(ThesisRepository thesisRepository) {
+        this.thesisRepository = thesisRepository;
+    }
+
+    @Override
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        authService = new AuthService(this.thesisRepository, this.userRepository);
     }
 
     @FXML
@@ -69,7 +84,6 @@ public class LoginController implements StatefulController {
 
         new Thread(loginTask).start();
     }
-    
 
     @FXML
     private void guestButtonOnClick() {

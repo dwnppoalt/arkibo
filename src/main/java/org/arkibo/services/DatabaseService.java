@@ -10,6 +10,10 @@ public class DatabaseService {
     Connection conn;
 
     public DatabaseService() {
+        connect();
+    }
+
+    private void connect() {
         try {
             this.conn = DriverManager.getConnection(connString);
             System.out.println("[DATABASE]: Connection established.");
@@ -18,7 +22,15 @@ public class DatabaseService {
         }
     }
 
+    private void ensureConnection() throws SQLException {
+        if (conn == null || conn.isClosed() || !conn.isValid(2)) {
+            System.out.println("[DATABASE]: Connection lost, reconnecting...");
+            connect();
+        }
+    }
+
     public <T> T query(String sql, SqlMapper<T> mapper, Object... params) throws SQLException {
+        ensureConnection();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++) {
                 stmt.setObject(i + 1, params[i]);
@@ -30,6 +42,7 @@ public class DatabaseService {
     }
 
     public int update(String sql, Object... params) throws SQLException {
+        ensureConnection();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++) {
                 stmt.setObject(i + 1, params[i]);
@@ -43,6 +56,7 @@ public class DatabaseService {
     }
 
     public void begin() throws SQLException {
+        ensureConnection();
         if (conn.getAutoCommit()) {
             conn.setAutoCommit(false);
         }
@@ -54,8 +68,10 @@ public class DatabaseService {
     }
 
     public void rollback() throws SQLException {
-        conn.rollback();
-        conn.setAutoCommit(true);
+        if (conn != null && !conn.isClosed()) {
+            conn.rollback();
+            conn.setAutoCommit(true);
+        }
     }
 
     public void close() throws SQLException {
