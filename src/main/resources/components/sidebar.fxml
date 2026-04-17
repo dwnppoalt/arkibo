@@ -15,7 +15,7 @@
      - jhalbert -->
 
 <VBox fx:id="sidebar" styleClass="sidebar" visible="false" maxHeight="-Infinity" maxWidth="260" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080" prefWidth="260.0" spacing="10.0"
-   xmlns="http://javafx.com/javafx/25"
+   xmlns="http://javafx.com/javafx/21"
    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.SidebarController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
