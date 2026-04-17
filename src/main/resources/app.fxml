@@ -16,6 +16,9 @@
             <StackPane fx:id="content" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
+
+      <Pane fx:id="overlayPane" visible="false" managed="false" onMouseClicked="#closeSidebar" />
+
    <HBox maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="200.0" BorderPane.alignment="CENTER" style="-fx-padding: 10px" pickOnBounds="false">
       <children>
          <Button fx:id="openSidebarButton" mnemonicParsing="false" text="☰" onAction="#toggleSidebar" />

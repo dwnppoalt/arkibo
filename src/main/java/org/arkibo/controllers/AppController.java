@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.effect.BoxBlur;
 
 import javafx.animation.TranslateTransition;
@@ -14,8 +15,6 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import org.arkibo.app.state.AppState;
-import org.arkibo.repository.ThesisRepository;
-import org.arkibo.repository.UserRepository;
 import org.arkibo.router.Router;
 
 public class AppController {
@@ -28,15 +27,14 @@ public class AppController {
     private BorderPane mainContent;
 
     @FXML
+    private Pane overlayPane;
+
+    @FXML
     private VBox sidebar;
 
     @FXML
     private SidebarController sidebarController;
 
-    private AppState appState;
-    private ThesisRepository thesisRepository;
-    private UserRepository userRepository;
-    
     private boolean isSidebarOpen = false;
     private static final double MAX_BLUR = 5;
     private final BoxBlur blur = new BoxBlur(MAX_BLUR, MAX_BLUR, 2);
@@ -44,21 +42,20 @@ public class AppController {
     public void initialize() {
         sidebar.setTranslateX(-260);
         sidebarController.setAppController(this);
-
     }
 
     public void setAppState(AppState appState) {
-        this.appState = appState;
+        sidebarController.setAppState(appState);
         Router.init(content, appState);
         Router.goTo("views/login.fxml");
     }
 
-    public void setThesisRepository(ThesisRepository thesisRepository) {
-        this.thesisRepository = thesisRepository;
+    public void setThesisRepository(org.arkibo.repository.ThesisRepository thesisRepository) {
+        sidebarController.setThesisRepository(thesisRepository);
     }
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserRepository(org.arkibo.repository.UserRepository userRepository) {
+        sidebarController.setUserRepository(userRepository);
     }
 
     @FXML
@@ -74,20 +71,27 @@ public class AppController {
     @FXML
     private void toggleSidebar() {
         setSidebarOpen(!isSidebarOpen);
-        sidebar.setMouseTransparent(isSidebarOpen);
+    }
+
+    @FXML
+    private void closeSidebar() {
+        setSidebarOpen(false);
     }
 
     public void setSidebarOpen(boolean open) {
 
         if (open == isSidebarOpen) return;
+        sidebarController.populateFields();
         sidebar.setMouseTransparent(false);
         isSidebarOpen = open;
 
         sidebar.setVisible(true);
+        overlayPane.setVisible(open);
+        overlayPane.setManaged(open);
+        overlayPane.setMouseTransparent(!open);
 
         TranslateTransition slide = new TranslateTransition(Duration.millis(220), sidebar);
         slide.setToX(open ? 0 : -sidebar.getWidth());
-
 
         Timeline blurAnim = new Timeline(
                 new KeyFrame(Duration.millis(220),
@@ -106,6 +110,8 @@ public class AppController {
             if (!open) {
                 sidebar.setVisible(false);
                 mainContent.setEffect(null);
+                overlayPane.setVisible(false);
+                overlayPane.setManaged(false);
             }
         });
 
