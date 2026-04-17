@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox fx:id="root" alignment="CENTER" spacing="10" styleClass="home"
-  xmlns="http://javafx.com/javafx/25"
+  xmlns="http://javafx.com/javafx/21"
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.HomeController">
 
   <Label text="arkibo" />

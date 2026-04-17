@@ -10,6 +10,7 @@ import org.arkibo.app.state.StatefulController;
 import org.arkibo.models.ThesisModels.Thesis;
 import org.arkibo.repository.ThesisRepository;
 import org.arkibo.repository.UserRepository;
+import org.arkibo.router.Router;
 import org.arkibo.search.SearchService;
 import org.arkibo.utils.CitationGenerator;
 import org.arkibo.utils.CollegeNameMapper;
@@ -157,6 +158,10 @@ public class ThesisInfoController implements StatefulController {
             toggleSaved();
         });
 
+        this.readButton.setOnAction((action) -> {
+            Router.goTo("views/read.fxml");
+        });
+
         this.closeCitationButton.setOnAction((action) -> {
             toggleCitations();
         });
@@ -200,6 +205,7 @@ public class ThesisInfoController implements StatefulController {
         });
 
         this.saveButton.setText(isThesisInSaved(this.selectedThesis.id()) ? "Saved" : "Save");
+
 
         if (this.appState.getUserSession().get().id() == "-1") {
             this.saveButton.setDisable(true);
