@@ -32,9 +32,5 @@
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
-      <Button mnemonicParsing="false" text="My Profile" />
-      <Button layoutX="30.0" layoutY="79.0" mnemonicParsing="false" text="My Library" />
-      <Separator layoutX="30.0" layoutY="66.0" prefWidth="200.0" />
-      <Button layoutX="30.0" layoutY="151.0" mnemonicParsing="false" text="Sign out" />
    </children>
 </VBox>
