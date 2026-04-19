@@ -1,6 +1,5 @@
 package org.arkibo.controllers;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +31,6 @@ import javafx.scene.layout.VBox;
 public class ThesisInfoController implements StatefulController {
 
     private AppState appState;
-    private UserRepository userRepository;
     private ThesisRepository thesisRepository;
     private SearchService searchService;
 
@@ -50,7 +48,6 @@ public class ThesisInfoController implements StatefulController {
 
     @Override
     public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
         this.searchService = new SearchService(thesisRepository, userRepository);
     }
 
@@ -187,6 +184,12 @@ public class ThesisInfoController implements StatefulController {
 
         this.selectedThesis.authors().forEach((author) -> {
             Label authorLabel = new Label(author.name());
+            authorLabel.getStyleClass().add("author-link");
+            authorLabel.setOnMouseClicked(event -> {
+                this.appState.getSearchState().setSelectedAuthorId(author.id());
+                this.appState.getSearchState().setSelectedAuthorName(author.name());
+                Router.goTo("views/author.fxml");
+            });
             this.authorVBox.getChildren().add(authorLabel);
         });
 

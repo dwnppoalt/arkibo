@@ -12,6 +12,8 @@ public class SearchState {
     private Integer page;
     
     private Thesis selectedStudy;
+    private Long selectedAuthorId;
+    private String selectedAuthorName;
 
     public String getSearchQuery() {
         return searchQuery;
@@ -27,6 +29,22 @@ public class SearchState {
 
     public void setSelectedStudy(Thesis thesis) {
         this.selectedStudy = thesis;
+    }
+
+    public Long getSelectedAuthorId() {
+        return selectedAuthorId;
+    }
+
+    public void setSelectedAuthorId(Long selectedAuthorId) {
+        this.selectedAuthorId = selectedAuthorId;
+    }
+
+    public String getSelectedAuthorName() {
+        return selectedAuthorName;
+    }
+
+    public void setSelectedAuthorName(String selectedAuthorName) {
+        this.selectedAuthorName = selectedAuthorName;
     }
 
     public String getSortByFilter() {
@@ -72,6 +90,8 @@ public class SearchState {
     public void clear() {
         this.searchQuery = null;
         this.selectedStudy = null;
+        this.selectedAuthorId = null;
+        this.selectedAuthorName = null;
     }
 
 }
