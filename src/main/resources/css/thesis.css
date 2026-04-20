@@ -1,4 +1,4 @@
-.author-link {
+.author-link, .keyword-link {
 	-fx-text-fill: #1a5a96;
 	-fx-underline: true;
 	-fx-cursor: hand;
