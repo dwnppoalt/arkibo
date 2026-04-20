@@ -204,6 +204,12 @@ public class ThesisInfoController implements StatefulController {
 
         this.selectedThesis.keywords().forEach((keyword) -> {
             Label keywordLabel = new Label(keyword.word());
+            keywordLabel.getStyleClass().add("keyword-link");
+            keywordLabel.setOnMouseClicked(event -> {
+                this.appState.getSearchState().setSelectedKeywordId(keyword.id());
+                this.appState.getSearchState().setSelectedKeywordName(keyword.word());
+                Router.goTo("views/keyword.fxml");
+            });
             this.keywordsVBox.getChildren().add(keywordLabel);
         });
 
