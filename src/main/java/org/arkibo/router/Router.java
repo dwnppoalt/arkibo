@@ -15,6 +15,7 @@ import org.arkibo.utils.Logger;
 public class Router {
     private static StackPane content;
     private static AppState appState;
+    private static String currentView;
     private static final ThesisRepository thesisRepository = new ThesisRepository();
     private static final UserRepository userRepository = new UserRepository();
 
@@ -24,6 +25,7 @@ public class Router {
     }
 
     public static void goTo(String fxml) {
+        currentView = fxml;
         try {
             URL url = Router.class.getResource("/" + fxml);
             Logger.log("ROUTER", "URL Resource: " + url);
@@ -40,6 +42,12 @@ public class Router {
             content.getChildren().setAll(view);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void reload() {
+        if (currentView != null) {
+            goTo(currentView);
         }
     }
 }

@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 
 import org.arkibo.app.state.AppState;
 import org.arkibo.controllers.AppController;
+import org.arkibo.router.Router;
 import org.arkibo.utils.FontLoader;
 import org.arkibo.utils.Logger;
 
-public class Main extends Application {
 
+public class Main extends Application {
     private static Stage primaryStage;
     private AppState appState;
 
@@ -50,24 +51,8 @@ public class Main extends Application {
     }
 
     private void reload() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/app.fxml"));
-            Parent newRoot = loader.load();
-            AppController controller = loader.getController();
-
-            if (controller == null) {
-                Logger.log("MAIN", "Warning: controller is null after loading app.fxml");
-            } else {
-                controller.setAppState(appState);
-            }
-            
-            primaryStage.getScene().setRoot(newRoot);
-            Logger.log("MAIN", "UI Reloaded");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Router.reload();
+        Logger.log("MAIN", "View Reloaded");
     }
 
     public static void main(String[] args) {
