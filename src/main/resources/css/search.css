@@ -1,59 +1,258 @@
-.root {
+* {
     -fx-font-family: "Readex Pro";
-    -fx-background-color: #ffffff;
 }
 
-.searchbar {
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 0 0 1 0;
+.searchRoot {
+    -fx-background-color: linear-gradient(to bottom, #f4f6f5 0%, #edf1ef 100%);
+    -fx-padding: 14;
 }
 
-.searchbar TextField {
+.filters-sidebar {
+    -fx-background-image: url("../images/background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+    -fx-background-insets: 0;
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
+    -fx-border-color: rgba(255, 255, 255, 0.12);
+    -fx-border-width: 1;
+    -fx-padding: 12 16 18 16;
+    -fx-effect: dropshadow(gaussian, rgba(8, 25, 14, 0.25), 18, 0.24, 0, 6);
+}
+
+.filterText {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-letter-spacing: 0.4px;
+    -fx-text-fill: #ffffff;
+}
+
+.filters-sidebar .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+}
+
+.filters-sidebar .separator .line {
+    -fx-border-color: rgba(255, 255, 255, 0.34);
+    -fx-border-width: 1 0 0 0;
+}
+
+.sortByChoiceBox,
+.researchTypeChoiceBox,
+.collegeChoiceBox,
+.yearRangeChoiceBox,
+.customYearRangeFrom,
+.customYearRangeTo {
+    -fx-background-color: rgba(255, 255, 255, 0.96);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(9, 55, 30, 0.22);
+    -fx-border-width: 1;
+    /* -fx-padding: 4 8; */
+    -fx-font-size: 12px;
+    -fx-pref-height: 1;
+}
+
+.sortByChoiceBox .label,
+.researchTypeChoiceBox .label,
+.collegeChoiceBox .label,
+.yearRangeChoiceBox .label {
+    -fx-text-fill: #17301d;
+    -fx-font-weight: 600;
+}
+
+.sortByChoiceBox .arrow,
+.researchTypeChoiceBox .arrow,
+.collegeChoiceBox .arrow,
+.yearRangeChoiceBox .arrow {
+    -fx-background-color: #2c5a34;
+}
+
+.sortByChoiceBox:focused,
+.researchTypeChoiceBox:focused,
+.collegeChoiceBox:focused,
+.yearRangeChoiceBox:focused,
+.customYearRangeFrom:focused,
+.customYearRangeTo:focused {
+    -fx-border-color: #3c9a68;
+    -fx-effect: dropshadow(gaussian, rgba(32, 123, 77, 0.28), 8, 0.2, 0, 0);
+}
+
+.customYearRangeHBox {
+    -fx-padding: 4 0 0 0;
+}
+
+.customYearRangeFrom,
+.customYearRangeTo {
+    -fx-prompt-text-fill: #6f7a72;
+}
+
+.applyFilterButton {
+    -fx-background-color: #f7faf7;
+    -fx-text-fill: #1d301f;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 9;
+    -fx-border-radius: 9;
+    -fx-border-color: rgba(27, 74, 44, 0.18);
+    -fx-border-width: 1;
+    -fx-padding: 7 18;
+    -fx-min-width: 212;
+}
+
+.applyFilterButton:hover {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.26), 10, 0.2, 0, 0);
+}
+
+.returnHomeButton {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.58);
+    -fx-border-width: 1;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-padding: 5 8;
+}
+
+.searchBarField {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #b4beb7;
+    -fx-border-width: 1;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-text-fill: #26322b;
+    -fx-prompt-text-fill: #8b948d;
+    -fx-pref-height: 20;
     -fx-pref-width: 400;
-    -fx-background-color: #f0f0f0;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
 }
 
-.searchbar Button {
-    -fx-background-color: #132c17;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 4;
+.searchBarField:focused {
+    -fx-border-color: #4ea97b;
+    -fx-effect: dropshadow(gaussian, rgba(38, 150, 98, 0.22), 8, 0.2, 0, 0);
 }
 
-.filterspanel {
-    -fx-padding: 15;
-    -fx-spacing: 10;
-    -fx-text-fill: #ffffff;
-    -fx-background-radius: 4;
+.searchBarButton {
+    -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #f3f6f4 100%);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-text-fill: #2a352d;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 8 16;
 }
 
-.filterspanel Label {
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+.searchBarButton:hover {
+    -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #edf3ef 100%);
 }
 
-.filterspanel TextField {
-
-
-}
-
-.resultspanel {
-    -fx-padding: 15;
-    -fx-spacing: 10;
-}
-
-.resultspanel Label {
-    -fx-font-size: 14;
-}
-
-.resultspanel ListView {
-    -fx-background-color: #ffffff;
+.textfield {
+    -fx-background-color: #fff;
+    -fx-max-width: 400;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-border-width: 1;
     -fx-border-color: #cccccc;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
+}
+
+.resultsLabel {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7b847d;
+}
+
+.resultsVBox {
+    -fx-background-color: #f7f9f8;
+    -fx-background-radius: 12;
+    -fx-border-color: #dce2de;
+    -fx-border-radius: 12;
+    -fx-padding: 14;
+    -fx-spacing: 12;
+}
+
+.resultsVBox .thesis-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-border-color: #e2e7e4;
+    -fx-border-radius: 8;
+    -fx-padding: 14 12 12 12;
+    -fx-effect: dropshadow(gaussian, rgba(25, 39, 31, 0.06), 6, 0.16, 0, 2);
+}
+
+.resultsVBox .thesis-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #232824;
+}
+
+.resultsVBox .thesis-authors,
+.resultsVBox .thesis-year,
+.resultsVBox .thesis,
+.resultsVBox .thesis-abstract {
+    -fx-text-fill: #677169;
+    -fx-font-size: 12px;
+}
+
+.resultsVBox .keyword-badge {
+    -fx-background-color: #cfd6c3;
+    -fx-background-radius: 25;
+    -fx-text-fill: #4d6528;
+    -fx-font-size: 10px;
+    -fx-font-weight: 700;
+    -fx-padding: 4 8;
+}
+
+.resultsVBox .read-button,
+.resultsVBox .button {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.resultsVBox .read-button {
+    -fx-background-color: #4d6528;
+    /* -fx-border-color: #132c17; */
+    -fx-border-width: 1;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-padding: 5 10;
+}
+
+.resultsVBox .read-button:hover {
+    -fx-background-color: #e6f2eb;
+}
+
+.resultsVBox .save-button {
+    -fx-background-color: #4d6528;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-padding: 5 10;
+}
+
+.resultsVBox .save-button:hover {
+    -fx-background-color: #5a7c31;
+}
+
+.previousPaginationButton,
+.nextPaginationButton {
+    -fx-background-color: #e3e7e5;
+    -fx-text-fill: #77817a;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 5 10;
+}
+
+.previousPaginationButton:hover,
+.nextPaginationButton:hover {
+    -fx-background-color: #d9dfdb;
+}
+
+.previousPaginationButton:disabled,
+.nextPaginationButton:disabled {
+    -fx-opacity: 0.72;
 }

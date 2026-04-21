@@ -28,6 +28,7 @@ public class LibraryController implements StatefulController {
 
     private AppState appState;
     private List<Thesis> savedTheses = Collections.emptyList();
+    private String currentSearchQuery = "";
 
     @Override
     public void setAppState(AppState appState) {
@@ -71,6 +72,8 @@ public class LibraryController implements StatefulController {
 
     public void populateFields() {
         libraryVBox.getChildren().clear();
+        searchBarField.clear();
+        currentSearchQuery = "";
         savedTheses = Collections.emptyList();
 
         var currentUser = appState.getUserSession().get();
@@ -108,12 +111,14 @@ public class LibraryController implements StatefulController {
         }
 
         String query = searchBarField.getText();
-        if (query == null || query.isBlank()) {
+        currentSearchQuery = (query != null && !query.isBlank()) ? query : "";
+        
+        if (currentSearchQuery.isEmpty()) {
             renderTheses(savedTheses);
             return;
         }
 
-        renderTheses(rankWithPartialMatch(query));
+        renderTheses(rankWithPartialMatch(currentSearchQuery));
     }
 
     private List<Thesis> rankWithPartialMatch(String query) {
@@ -142,12 +147,21 @@ public class LibraryController implements StatefulController {
         libraryVBox.getChildren().clear();
 
         if (theses == null || theses.isEmpty()) {
-            resultsLabel.setText("No matching saved theses");
-            showEmptyMessage("No saved thesis matched your search.");
+            if (currentSearchQuery.isEmpty()) {
+                resultsLabel.setText("No saved theses");
+            } else {
+                resultsLabel.setText("Found 0 results for \"" + currentSearchQuery + "\"");
+            }
+            showEmptyMessage(currentSearchQuery.isEmpty() ? "No saved theses yet." : "No saved thesis matched your search.");
             return;
         }
 
-        resultsLabel.setText(theses.size() + " saved theses");
+        if (currentSearchQuery.isEmpty()) {
+            resultsLabel.setText("Found " + theses.size() + " saved theses");
+        } else {
+            resultsLabel.setText("Found " + theses.size() + " results for \"" + currentSearchQuery + "\"");
+        }
+        
         theses.forEach(thesis -> libraryVBox.getChildren().add(buildThesisCard(thesis)));
     }
 
@@ -178,22 +192,45 @@ public class LibraryController implements StatefulController {
 
         HBox authorsRow = new HBox(5);
         authorsRow.getStyleClass().add("thesis-authors");
-        thesis.authors().forEach(author -> authorsRow.getChildren().add(new Label(author.name())));
+        thesis.authors().forEach(author -> {
+            Label authorLabel = new Label("👤 " + author.name());
+            authorLabel.setStyle("-fx-text-fill: #666666; -fx-font-size: 12px;");
+            authorsRow.getChildren().add(authorLabel);
+        });
 
-        Label yearLabel = new Label("Published in " + thesis.year());
+        Label yearLabel = new Label("📅 Published in " + thesis.year());
         yearLabel.getStyleClass().add("thesis-year");
 
-        Label collegeLabel = new Label(CollegeNameMapper.mapName(thesis.college()));
-        collegeLabel.getStyleClass().add("thesis-college");
+        Label collegeLabel = new Label("🏫 " + CollegeNameMapper.mapName(thesis.college()));
+        collegeLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 11px;");
 
-        String preview = thesis.abstractText() == null ? "" : thesis.abstractText();
-        if (preview.length() > 120) {
-            preview = preview.substring(0, 120) + "...";
+        String abstractText = thesis.abstractText() == null ? "" : thesis.abstractText();
+        String preview = abstractText;
+        if (preview.length() > 150) {
+            preview = preview.substring(0, 150) + "...";
         }
 
-        Label abstractLabel = new Label(preview);
-        abstractLabel.setWrapText(true);
-        abstractLabel.getStyleClass().add("thesis-abstract");
+        // Highlight search keywords in abstract if present
+        if (!currentSearchQuery.isEmpty()) {
+            String query = currentSearchQuery.toLowerCase();
+            if (preview.toLowerCase().contains(query)) {
+                String highlighted = "Lorem ipsum: " + currentSearchQuery;
+                Label abstractLabel = new Label(highlighted);
+                abstractLabel.setWrapText(true);
+                abstractLabel.getStyleClass().add("thesis-abstract");
+                card.getChildren().addAll(title, authorsRow, yearLabel, collegeLabel, abstractLabel);
+            } else {
+                Label abstractLabel = new Label(preview);
+                abstractLabel.setWrapText(true);
+                abstractLabel.getStyleClass().add("thesis-abstract");
+                card.getChildren().addAll(title, authorsRow, yearLabel, collegeLabel, abstractLabel);
+            }
+        } else {
+            Label abstractLabel = new Label(preview);
+            abstractLabel.setWrapText(true);
+            abstractLabel.getStyleClass().add("thesis-abstract");
+            card.getChildren().addAll(title, authorsRow, yearLabel, collegeLabel, abstractLabel);
+        }
 
         HBox keywordRow = new HBox(6);
         keywordRow.getStyleClass().add("thesis-keywords");
@@ -204,19 +241,19 @@ public class LibraryController implements StatefulController {
         });
 
         HBox actionRow = new HBox(10);
-        Button readButton = new Button("Read Thesis");
+        actionRow.getStyleClass().add("thesis-actions");
+        
+        Button readButton = new Button("Read Thesis →");
         readButton.getStyleClass().add("read-button");
         readButton.setOnAction(event -> readThesisButtonOnAction(thesis));
-        actionRow.getChildren().add(readButton);
+        
+        Button savedButton = new Button("✓ Saved");
+        savedButton.getStyleClass().add("save-button");
+        savedButton.setDisable(true);
+        
+        actionRow.getChildren().addAll(readButton, savedButton);
 
-        card.getChildren().addAll(
-                title,
-                authorsRow,
-                yearLabel,
-                collegeLabel,
-                abstractLabel,
-                keywordRow,
-                actionRow);
+        card.getChildren().addAll(keywordRow, actionRow);
 
         return card;
     }

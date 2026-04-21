@@ -72,7 +72,9 @@ public class KeywordController implements StatefulController {
     @FXML
     public void initialize() {
         keywordRoot.getStylesheets().add(
-                getClass().getResource("/css/author.css").toExternalForm());
+            getClass().getResource("/css/library.css").toExternalForm());
+        keywordRoot.getStylesheets().add(
+            getClass().getResource("/css/keyword.css").toExternalForm());
 
         keywordVBox.getStyleClass().add("results-list");
         searchBarField.textProperty().addListener((obs, oldText, newText) -> searchKeywordTheses());

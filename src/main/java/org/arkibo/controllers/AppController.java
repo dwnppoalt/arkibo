@@ -4,11 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.effect.BoxBlur;
 
-import javafx.animation.TranslateTransition;
-import javafx.animation.ParallelTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,26 +23,24 @@ public class AppController {
     private BorderPane mainContent;
 
     @FXML
-    private Pane overlayPane;
-
-    @FXML
     private VBox sidebar;
 
     @FXML
     private SidebarController sidebarController;
 
-    private boolean isSidebarOpen = false;
-    private static final double MAX_BLUR = 5;
-    private final BoxBlur blur = new BoxBlur(MAX_BLUR, MAX_BLUR, 2);
+    private boolean sidebarCollapsed;
+    private static final double SIDEBAR_EXPANDED_WIDTH = 260;
+    private static final double SIDEBAR_COLLAPSED_WIDTH = 84;
 
     public void initialize() {
-        sidebar.setTranslateX(-260);
         sidebarController.setAppController(this);
+        setSidebarCollapsed(false, false);
     }
 
     public void setAppState(AppState appState) {
         sidebarController.setAppState(appState);
         Router.init(content, appState);
+        Router.setOnNavigate(() -> sidebarController.populateFields());
         Router.goTo("views/login.fxml");
     }
 
@@ -59,63 +53,38 @@ public class AppController {
     }
 
     @FXML
-    private void goHome() {
-        Router.goTo("views/home.fxml");
+    public void toggleSidebar() {
+        setSidebarCollapsed(!sidebarCollapsed, true);
     }
 
-    @FXML
-    private void goSearch() {
-        Router.goTo("views/search.fxml");
+    public void setSidebarCollapsed(boolean collapsed) {
+        setSidebarCollapsed(collapsed, true);
     }
 
-    @FXML
-    private void toggleSidebar() {
-        setSidebarOpen(!isSidebarOpen);
-    }
-
-    @FXML
-    private void closeSidebar() {
-        setSidebarOpen(false);
-    }
-
-    public void setSidebarOpen(boolean open) {
-
-        if (open == isSidebarOpen) return;
-        sidebarController.populateFields();
-        sidebar.setMouseTransparent(false);
-        isSidebarOpen = open;
-
-        sidebar.setVisible(true);
-        overlayPane.setVisible(open);
-        overlayPane.setManaged(open);
-        overlayPane.setMouseTransparent(!open);
-
-        TranslateTransition slide = new TranslateTransition(Duration.millis(220), sidebar);
-        slide.setToX(open ? 0 : -sidebar.getWidth());
-
-        Timeline blurAnim = new Timeline(
-                new KeyFrame(Duration.millis(220),
-                        new KeyValue(blur.widthProperty(), open ? MAX_BLUR : 0),
-                        new KeyValue(blur.heightProperty(), open ? MAX_BLUR : 0)
-                    )
-                );
-
-        if (open) {
-            mainContent.setEffect(blur);
+    private void setSidebarCollapsed(boolean collapsed, boolean animated) {
+        if (collapsed == sidebarCollapsed && animated) {
+            return;
         }
 
-        ParallelTransition animation = new ParallelTransition(slide, blurAnim);
+        sidebarCollapsed = collapsed;
+        sidebarController.populateFields();
+        sidebarController.setCollapsed(collapsed);
 
-        animation.setOnFinished(e -> {
-            if (!open) {
-                sidebar.setVisible(false);
-                mainContent.setEffect(null);
-                overlayPane.setVisible(false);
-                overlayPane.setManaged(false);
-            }
-        });
+        double targetWidth = collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
+        if (!animated) {
+            sidebar.setMinWidth(targetWidth);
+            sidebar.setPrefWidth(targetWidth);
+            sidebar.setMaxWidth(targetWidth);
+            return;
+        }
 
-        animation.play();
+        Timeline widthAnimation = new Timeline(
+                new KeyFrame(Duration.millis(220),
+                        new KeyValue(sidebar.minWidthProperty(), targetWidth),
+                        new KeyValue(sidebar.prefWidthProperty(), targetWidth),
+                        new KeyValue(sidebar.maxWidthProperty(), targetWidth)
+                ));
+        widthAnimation.play();
     }
 
 }

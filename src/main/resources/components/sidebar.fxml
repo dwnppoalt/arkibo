@@ -5,8 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <!-- For the meantime, the buttons and fields are hard-coded. 
      Once the login page and sessions are implemented,
@@ -14,23 +18,84 @@
      on the user's session state.
      - jhalbert -->
 
-<VBox fx:id="sidebar" styleClass="sidebar" visible="false" maxHeight="-Infinity" maxWidth="260" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080" prefWidth="260.0" spacing="10.0"
+<VBox fx:id="sidebar" styleClass="sidebar" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" spacing="8.0"
    xmlns="http://javafx.com/javafx/21"
    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.SidebarController">
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
    </padding>
    <children>
-      <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" prefHeight="0.0" prefWidth="200.0" spacing="10.0">
+      <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="sidebar-header">
          <children>
-            <Button mnemonicParsing="false" text="☰" onAction="#closeSidebar"/>
-            <Label text="arkibo" fx:id="title">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
+            <Button fx:id="titleButton" mnemonicParsing="false" onAction="#openSidebar" styleClass="app-title-button" text="arkibo" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="collapseButton" mnemonicParsing="false" onAction="#toggleSidebar" styleClass="collapse-button">
+               <graphic>
+                  <FontIcon fx:id="collapseIcon" iconLiteral="fas-angle-left" iconSize="14" />
+               </graphic>
+            </Button>
          </children>
       </HBox>
-      <Separator prefWidth="200.0" />
+
+      <Separator prefWidth="200.0" styleClass="sidebar-separator" />
+
+      <Label fx:id="overviewLabel" styleClass="section-label" text="OVERVIEW" />
+
+      <VBox fx:id="overviewGroup" spacing="4.0">
+         <children>
+            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goHome" styleClass="nav-button" text="Home">
+               <graphic>
+                  <FontIcon iconLiteral="fas-house-user" iconSize="14" styleClass="nav-icon" />
+               </graphic>
+            </Button>
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#goSearch" styleClass="nav-button" text="Search">
+               <graphic>
+                  <FontIcon iconLiteral="fas-search" iconSize="14" styleClass="nav-icon" />
+               </graphic>
+            </Button>
+            <Button fx:id="libraryButton" mnemonicParsing="false" onAction="#goLibrary" styleClass="nav-button" text="Library">
+               <graphic>
+                  <FontIcon iconLiteral="fas-book-open" iconSize="14" styleClass="nav-icon" />
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+
+      <Separator prefWidth="200.0" styleClass="sidebar-separator" />
+      <Label fx:id="accountLabel" styleClass="section-label" text="ACCOUNT" />
+
+      <VBox fx:id="accountGroup" spacing="4.0">
+         <children>
+            <Button fx:id="signInButton" mnemonicParsing="false" onAction="#goSignIn" styleClass="nav-button" text="Sign In">
+               <graphic>
+                  <FontIcon iconLiteral="fas-sign-in-alt" iconSize="14" styleClass="nav-icon" />
+               </graphic>
+            </Button>
+            <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#signOut" styleClass="nav-button" text="Sign Out">
+               <graphic>
+                  <FontIcon iconLiteral="fas-sign-out-alt" iconSize="14" styleClass="nav-icon" />
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <HBox fx:id="userFooter" alignment="CENTER_LEFT" spacing="10.0" styleClass="user-footer">
+         <children>
+            <StackPane styleClass="user-avatar-wrap">
+               <children>
+                  <ImageView fx:id="userAvatar" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="false" styleClass="user-avatar-image" />
+                  <Label fx:id="userInitial" styleClass="user-initial" text="G" />
+               </children>
+            </StackPane>
+            <VBox fx:id="userMeta" spacing="2.0" styleClass="user-meta">
+               <children>
+                  <Label fx:id="userNameLabel" styleClass="user-name" text="Guest" />
+                  <Label fx:id="userEmailLabel" styleClass="user-email" text="Sign in to sync" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </VBox>

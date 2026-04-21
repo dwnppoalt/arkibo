@@ -12,7 +12,6 @@ import org.arkibo.repository.UserRepository;
 import org.arkibo.router.Router;
 import org.arkibo.search.SearchService;
 import org.arkibo.utils.CitationGenerator;
-import org.arkibo.utils.CollegeNameMapper;
 import org.arkibo.utils.Logger;
 
 import javafx.application.Platform;
@@ -23,7 +22,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -63,9 +61,6 @@ public class ThesisInfoController implements StatefulController {
     private Label titleLabel;
 
     @FXML
-    private HBox contentHBox;
-
-    @FXML
     private VBox abstractVBox;
 
     @FXML
@@ -87,9 +82,6 @@ public class ThesisInfoController implements StatefulController {
     private VBox keywordsVBox;
 
     @FXML
-    private VBox collegeVBox;
-
-    @FXML
     private Button readButton;
 
     @FXML
@@ -102,7 +94,6 @@ public class ThesisInfoController implements StatefulController {
     private Pane citationPane;
 
     @FXML
-    // private VBox citationVBox;
     private StackPane citationStackPane;
 
     @FXML
@@ -119,9 +110,6 @@ public class ThesisInfoController implements StatefulController {
         thesisRoot.getStylesheets()
                 .add(getClass().getResource("/css/thesis.css").toExternalForm());
         Logger.log("THESIS", "Initialized thesis.fxml");
-
-        this.abstractVBox.prefWidthProperty().bind(contentHBox.widthProperty().multiply(2.0 / 3.0));
-        this.detailsVBox.prefWidthProperty().bind(contentHBox.widthProperty().multiply(1.0 / 3.0));
 
         this.thesisRoot.setFocusTraversable(true);
         this.thesisRoot.requestFocus();
@@ -167,7 +155,6 @@ public class ThesisInfoController implements StatefulController {
 
     public void populateFields() {
         String publishedYear = String.valueOf(this.selectedThesis.year());
-        String college = CollegeNameMapper.mapName(this.selectedThesis.college());
         String researchType = this.selectedThesis.researchType().type();
         String title = this.selectedThesis.title();
         String abstractText = this.selectedThesis.abstractText();
@@ -195,9 +182,6 @@ public class ThesisInfoController implements StatefulController {
 
         this.publishedVBox.getChildren().add(
                 new Label(publishedYear));
-
-        this.collegeVBox.getChildren().add(
-                new Label(college));
 
         this.researchTypeVBox.getChildren().add(
                 new Label(researchType));

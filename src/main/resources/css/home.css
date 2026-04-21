@@ -1,23 +1,27 @@
-.home {
+* {
     -fx-font-family: "Readex Pro";
-    -fx-font-size: 16px;
 }
 
-.background {
-    -fx-background-color: #ffffff;
+.home {
+    -fx-background-image: url("../images/background.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: 100% 100%;
+    -fx-background-insets: 0;
 }
 
 .title {
+    -fx-font-size: 50px;
     -fx-font-family: "Montserrat";
-    -fx-font-size: 48;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to right, #132c17 0%, #4d6528 50%, #a1ae1c 100%);
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 2);
 }
 
 .tagline {
     -fx-font-family: "Readex Pro";
-    -fx-text-fill: #132c17;
-    -fx-font-size: 14; 
+    -fx-text-fill: #fafafa;
+    -fx-font-size: 14;
 }
 
 .searchbar {
@@ -30,9 +34,18 @@
 }
 
 .searchbutton {
-    -fx-background-color: #2e8b57;
-    -fx-text-fill: white;
+    -fx-background-color: #fafafa;
     -fx-font-weight: bold;
     -fx-background-radius: 4;
     -fx-padding: 6 12 6 12;
+    -fx-cursor: hand;
+}
+
+.textfield {
+    -fx-background-color: #fff;
+    -fx-max-width: 350;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-border-width: 1;
+    -fx-border-color: #cccccc;
 }

@@ -174,6 +174,8 @@ public class SearchController implements StatefulController {
             this.appState.getSearchState().setPage(page);
             search();
         });
+
+        applyFilterButton.setOnAction(event -> search());
     }
 
     private void populateFields() {

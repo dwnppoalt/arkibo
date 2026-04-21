@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import org.arkibo.app.state.AppState;
 import org.arkibo.controllers.AppController;
@@ -15,13 +16,11 @@ import org.arkibo.utils.Logger;
 
 
 public class Main extends Application {
-    private static Stage primaryStage;
     private AppState appState;
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        primaryStage = stage;
         appState = new AppState();
 
         FXMLLoader loader = new FXMLLoader(
@@ -35,6 +34,8 @@ public class Main extends Application {
         FontLoader.loadFonts("/fonts");
 
         enableReload(scene);
+
+        stage.initStyle(StageStyle.UNDECORATED);
 
         stage.setTitle("arkibo");
         stage.setScene(scene);

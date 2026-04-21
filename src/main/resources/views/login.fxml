@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-      <VBox alignment="CENTER"
-      prefHeight="400.0"
-      prefWidth="600.0"
-      stylesheets="@/css/login.css"
-      fx:id="login"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.arkibo.controllers.LoginController"
-      styleClass="background">
-
+<BorderPane fx:id="login" prefHeight="200.0" prefWidth="200.0" styleClass="login" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.LoginController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="34.0" prefWidth="108.0" styleClass="title" text="arkibo" textAlignment="CENTER" />
-            <Label alignment="CENTER" styleClass="subtitle" text="CLSU Archives" />
-            <Button alignment="CENTER" mnemonicParsing="false" styleClass="button google" text="Sign in with Google" fx:id="googleLogin" onAction="#googleButtonOnClick"/>
-            <Label alignment="CENTER" text="or" style="fx-font-size: 12px;" />
-            <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" styleClass="button guest" text="Sign in as guest" fx:id="guestLogin" onAction="#guestButtonOnClick"/>
+            <Label alignment="CENTER" styleClass="title" text="arkibo" textAlignment="CENTER" />
+            <Label alignment="CENTER" styleClass="subtitle" text="Access a collection of research papers from Central Luzon State University" textOverrun="CLIP" wrapText="true" />
+         </children>
+         <VBox.margin>
+            <Insets top="20"/>
+         </VBox.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="googleLogin" alignment="CENTER" mnemonicParsing="false" onAction="#googleButtonOnClick" styleClass="button-google" text="Sign in with Google">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/google.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <HBox alignment="CENTER" style="-fx-spacing: 10">
+               <children>
+                  <Separator prefWidth="200.0" style="-fx-pref-width: 70;" />
+                  <Label alignment="CENTER" style="-fx-font-size: 12px; -fx-text-fill: #fff" text="or" />
+                  <Separator prefWidth="200.0" style="-fx-pref-width: 70;" />
+               </children>
+               <VBox.margin>
+                  <Insets top="5" />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="guestLogin" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#guestButtonOnClick" styleClass="button-guest" text="Sign in as guest" />
          </children>
       </VBox>
-   
-
+   </bottom>
+</BorderPane>

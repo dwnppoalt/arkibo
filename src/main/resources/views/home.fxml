@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="root" alignment="CENTER" spacing="10" styleClass="home"
-  xmlns="http://javafx.com/javafx/21"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.HomeController">
+<VBox fx:id="root" alignment="CENTER" styleClass="home" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.HomeController">
 
-  <Label text="arkibo" />
-  <HBox alignment="CENTER" spacing="20.0">
+  <Label text="arkibo" styleClass="title"/>
+   <Label text="Access a collection of research papers from Central Luzon State University" styleClass="tagline" />
+  <HBox alignment="CENTER" styleClass="textfield">
     <children>
-      <TextField fx:id="searchField" />
-      <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonOnAction" text="Search" />
+      <TextField fx:id="searchField" styleClass="searchbar" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: rgba(0, 0, 0, 0);"/>
+      <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonOnAction" styleClass="searchbutton" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: rgba(0, 0, 0, 0);"> 
+          <graphic>
+            <FontIcon iconLiteral="fas-search" iconSize="12" />
+          </graphic>
+      </Button>
     </children>
+    <VBox.margin>
+      <Insets top="10" />
+    </VBox.margin>
   </HBox>
 
 

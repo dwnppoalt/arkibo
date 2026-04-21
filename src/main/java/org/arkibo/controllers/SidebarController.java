@@ -7,16 +7,19 @@ import org.arkibo.repository.UserRepository;
 import org.arkibo.router.Router;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import javafx.scene.input.KeyCode;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class SidebarController implements StatefulController {
     private AppState appState;
     private AppController appController;
+    private boolean collapsed;
 
     @Override
     public void setAppState(AppState appState) {
@@ -39,16 +42,66 @@ public class SidebarController implements StatefulController {
     private VBox sidebar;
 
     @FXML
+    private Label overviewLabel;
+
+    @FXML
+    private Label accountLabel;
+
+    @FXML
+    private VBox userMeta;
+
+    @FXML
+    private Button collapseButton;
+
+    @FXML
+    private Button titleButton;
+
+    @FXML
+    private FontIcon collapseIcon;
+
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button libraryButton;
+
+    @FXML
+    private Button signInButton;
+
+    @FXML
+    private Button signOutButton;
+
+    @FXML
+    private Label userInitial;
+
+    @FXML
+    private ImageView userAvatar;
+
+    @FXML
+    private Label userNameLabel;
+
+    @FXML
+    private Label userEmailLabel;
+
+    @FXML
     public void initialize() {
-        sidebar.setAlignment(Pos.TOP_LEFT);
         sidebar.getStylesheets()
-                .add(getClass().getResource("/css/sidebar.css").toExternalForm());        
+                .add(getClass().getResource("/css/sidebar.css").toExternalForm());
+
+        userAvatar.setClip(new Circle(14, 14, 14));
+
+        setCollapsed(false);
     }
 
     public void bindStates() {
         this.sidebar.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                closeSidebar();
+                if (!collapsed) {
+                    toggleSidebar();
+                }
             }
         });
     }
@@ -58,46 +111,63 @@ public class SidebarController implements StatefulController {
             return;
         }
 
-        sidebar.getChildren().removeIf(node -> node.getProperties().containsKey("dynamic-sidebar-item"));
+        boolean signedIn = isRealUserSignedIn();
 
-        if (isRealUserSignedIn()) {
-            Button profile = new Button("My Profile");
-            Button library = new Button("My Library");
-            Separator separator = new Separator();
-            Button signOut = new Button("Sign out");
+        signOutButton.setVisible(signedIn);
+        signOutButton.setManaged(signedIn);
 
-            profile.getProperties().put("dynamic-sidebar-item", true);
-            library.getProperties().put("dynamic-sidebar-item", true);
-            separator.getProperties().put("dynamic-sidebar-item", true);
-            signOut.getProperties().put("dynamic-sidebar-item", true);
+        signInButton.setVisible(!signedIn);
+        signInButton.setManaged(!signedIn);
 
-            profile.setMaxWidth(Double.MAX_VALUE);
-            library.setMaxWidth(Double.MAX_VALUE);
-            signOut.setMaxWidth(Double.MAX_VALUE);
-            profile.setAlignment(Pos.CENTER_LEFT);
-            library.setAlignment(Pos.CENTER_LEFT);
-            signOut.setAlignment(Pos.CENTER_LEFT);
+        if (signedIn) {
+            String displayName = appState.getUserSession().get().name();
+            String email = appState.getUserSession().get().email();
+            String imageUrl = appState.getUserSession().get().imageUrl();
 
-            VBox.setMargin(profile, new Insets(10, 0, 0, 0));
-            VBox.setMargin(library, new Insets(0, 0, 0, 0));
-            VBox.setMargin(separator, new Insets(10, 0, 0, 0));
-            VBox.setMargin(signOut, new Insets(0, 0, 0, 0));
+            if (displayName == null || displayName.isBlank()) {
+                displayName = "User";
+            }
+            if (email == null || email.isBlank()) {
+                email = "No email";
+            }
 
-            profile.setOnAction(event -> goProfile());
-            library.setOnAction(event -> goLibrary());
-            signOut.setOnAction(event -> signOut());
-
-            sidebar.getChildren().addAll(profile, library, separator, signOut);
+            userNameLabel.setText(displayName);
+            userEmailLabel.setText(email);
+            userInitial.setText(displayName.substring(0, 1).toUpperCase());
+            applyUserAvatar(imageUrl);
             return;
         }
 
-        Button signIn = new Button("Sign In");
-        signIn.getProperties().put("dynamic-sidebar-item", true);
-        signIn.setMaxWidth(Double.MAX_VALUE);
-        signIn.setAlignment(Pos.CENTER_LEFT);
-        VBox.setMargin(signIn, new Insets(10, 0, 0, 0));
-        signIn.setOnAction(event -> goSignIn());
-        sidebar.getChildren().add(signIn);
+        userNameLabel.setText("Guest");
+        userEmailLabel.setText("Sign in to sync");
+        userInitial.setText("G");
+        applyUserAvatar(null);
+    }
+
+    private void applyUserAvatar(String imageUrl) {
+        if (imageUrl == null || imageUrl.isBlank()) {
+            userAvatar.setImage(null);
+            userAvatar.setVisible(false);
+            userAvatar.setManaged(false);
+            userInitial.setVisible(true);
+            userInitial.setManaged(true);
+            return;
+        }
+
+        try {
+            Image profile = new Image(imageUrl, 28, 28, false, true, true);
+            userAvatar.setImage(profile);
+            userAvatar.setVisible(true);
+            userAvatar.setManaged(true);
+            userInitial.setVisible(false);
+            userInitial.setManaged(false);
+        } catch (Exception ignored) {
+            userAvatar.setImage(null);
+            userAvatar.setVisible(false);
+            userAvatar.setManaged(false);
+            userInitial.setVisible(true);
+            userInitial.setManaged(true);
+        }
     }
 
     private boolean isRealUserSignedIn() {
@@ -109,14 +179,17 @@ public class SidebarController implements StatefulController {
     }
 
     @FXML
-    private void goProfile() {
-        closeSidebar();
-        Router.goTo("views/profile.fxml");
+    private void goHome() {
+        Router.goTo("views/home.fxml");
+    }
+
+    @FXML
+    private void goSearch() {
+        Router.goTo("views/search.fxml");
     }
 
     @FXML
     private void goLibrary() {
-        closeSidebar();
         Router.goTo("views/library.fxml");
     }
 
@@ -126,18 +199,46 @@ public class SidebarController implements StatefulController {
             appState.getUserSession().clear();
         }
         populateFields();
-        closeSidebar();
         Router.goTo("views/login.fxml");
     }
 
     @FXML
     private void goSignIn() {
-        closeSidebar();
         Router.goTo("views/login.fxml");
     }
 
     @FXML
-    private void closeSidebar() {
-        appController.setSidebarOpen(false);
+    private void toggleSidebar() {
+        appController.toggleSidebar();
+    }
+
+    @FXML
+    private void openSidebar() {
+        if (collapsed) {
+            appController.setSidebarCollapsed(false);
+        }
+    }
+
+    public void setCollapsed(boolean collapsed) {
+        this.collapsed = collapsed;
+
+        sidebar.getStyleClass().remove("collapsed");
+        if (collapsed) {
+            sidebar.getStyleClass().add("collapsed");
+        } else {
+            collapseIcon.setIconLiteral("fas-angle-left");
+        }
+
+        overviewLabel.setVisible(!collapsed);
+        overviewLabel.setManaged(!collapsed);
+        accountLabel.setVisible(!collapsed);
+        accountLabel.setManaged(!collapsed);
+        userMeta.setVisible(!collapsed);
+        userMeta.setManaged(!collapsed);
+        collapseButton.setVisible(!collapsed);
+        collapseButton.setManaged(!collapsed);
+
+        sidebar.applyCss();
+        sidebar.requestLayout();
     }
 }

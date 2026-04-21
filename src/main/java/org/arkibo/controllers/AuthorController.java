@@ -72,6 +72,8 @@ public class AuthorController implements StatefulController {
     @FXML
     public void initialize() {
         authorRoot.getStylesheets().add(
+            getClass().getResource("/css/library.css").toExternalForm());
+        authorRoot.getStylesheets().add(
                 getClass().getResource("/css/author.css").toExternalForm());
 
         authorVBox.getStyleClass().add("results-list");

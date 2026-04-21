@@ -1,4 +1,4 @@
-.background {
+.login {
     -fx-background-image: url("../images/background.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
@@ -7,10 +7,11 @@
 }
 
 .title {
-    -fx-font-size: 25px;
-    -fx-font-family: "Montserrat";
-    -fx-font-weight: Bold;
+    -fx-font-size: 50px;
+    -fx-font-family: "Readex Pro";
+    -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 2);
 }
 
 .subtitle {
@@ -22,17 +23,24 @@
 .button {
     -fx-font-family: "Readex Pro";
     -fx-font-size: 12px;
-    -fx-font-weight: Bold;
     -fx-padding: 8px 16px;
 }
 
-.button.google {
+.button-google {
     -fx-background-color: #ffffff;
     -fx-background-radius: 25;
-    -fx-text-fill: #132c17;
+    -fx-text-fill: #264c2b;
+    -fx-font-weight: Bold;
+    -fx-cursor: hand;
 }
 
-.button.guest {
+.button-guest {
     -fx-background-color: rgba(0, 0, 0, 0);
     -fx-text-fill: #ffffff;
+    -fx-padding: 4px 8px;
+    -fx-cursor: hand;
+}
+
+.separator .line {
+    -fx-border-width: 0.75px;
 }

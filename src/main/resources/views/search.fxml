@@ -10,11 +10,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="searchRoot" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.SearchController">
+<BorderPane fx:id="searchRoot" styleClass="searchRoot" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.arkibo.controllers.SearchController">
   <left>
-    <BorderPane prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+    <BorderPane prefHeight="200.0" prefWidth="250.0" styleClass="filters-sidebar" BorderPane.alignment="CENTER">
       <top>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
           <children>
@@ -22,11 +21,7 @@
               <children>
                 <HBox prefWidth="200.0">
                   <children>
-                    <Label text="Filter">
-                      <font>
-                        <Font size="10.0" />
-                      </font>
-                    </Label>
+                    <Label styleClass="filterText" text="Filter" />
                   </children>
                   <VBox.margin>
                     <Insets />
@@ -37,54 +32,39 @@
                     <Insets />
                   </VBox.margin>
                 </Separator>
-                <Label text="Sort by">
-                  <font>
-                    <Font size="10.0" />
-                  </font>
-                </Label>
-                <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" />
+                <Label styleClass="filterText" text="Sort by" />
+                <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150.0" styleClass="sortByChoiceBox" />
                 <Separator prefWidth="200.0">
                   <VBox.margin>
                     <Insets top="5.0" />
                   </VBox.margin>
                 </Separator>
-                <Label text="Research type">
-                  <font>
-                    <Font size="10.0" />
-                  </font>
-                  <VBox.margin>
-                    <Insets />
-                  </VBox.margin>
-                </Label>
-                <ChoiceBox fx:id="researchTypeChoiceBox" prefWidth="150.0" />
+                <Label styleClass="filterText" text="Research type" />
+                <ChoiceBox fx:id="researchTypeChoiceBox" prefWidth="150.0" styleClass="researchTypeChoiceBox" />
                 <Separator prefWidth="200.0">
                   <VBox.margin>
                     <Insets top="5.0" />
                   </VBox.margin>
                 </Separator>
-                <Label layoutX="10.0" layoutY="128.0" text="College">
-                  <font>
-                    <Font size="10.0" />
-                  </font>
-                </Label>
-                <ChoiceBox fx:id="collegeChoiceBox" layoutX="10.0" layoutY="143.0" prefWidth="150.0" />
-                <Separator layoutX="10.0" layoutY="125.0" prefWidth="200.0" />
-                <Label text="Year range">
-                  <font>
-                    <Font size="10.0" />
-                  </font>
-                </Label>
-                <ChoiceBox fx:id="yearRangeChoiceBox" prefWidth="150.0" />
-                        <HBox fx:id="customYearRangeHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" visible="false">
+                <Label layoutX="10.0" layoutY="128.0" styleClass="filterText" text="College" />
+                <ChoiceBox fx:id="collegeChoiceBox" layoutX="10.0" layoutY="143.0" prefWidth="150.0" styleClass="collegeChoiceBox" />
+                <Separator layoutX="10.0" layoutY="125.0" prefWidth="200.0"> 
+                    <VBox.margin>
+                      <Insets top="5.0" />
+                    </VBox.margin>
+                </Separator>
+                <Label styleClass="filterText" text="Year range" />
+                <ChoiceBox fx:id="yearRangeChoiceBox" prefWidth="150.0" styleClass="yearRangeChoiceBox" />
+                        <HBox fx:id="customYearRangeHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" styleClass="customYearRangeHBox" visible="false">
                            <children>
-                              <TextField fx:id="customYearRangeFrom" promptText="1900" />
+                              <TextField fx:id="customYearRangeFrom" promptText="1900" styleClass="customYearRangeFrom" />
                               <Label text="to" wrapText="true" />
-                              <TextField fx:id="customYearRangeTo" layoutX="10.0" layoutY="10.0" />
+                              <TextField fx:id="customYearRangeTo" layoutX="10.0" layoutY="10.0" styleClass="customYearRangeTo" />
                            </children>
                         </HBox>
               </children>
             </VBox>
-            <Button fx:id="applyFilterButton" mnemonicParsing="false" text="Apply filters">
+            <Button fx:id="applyFilterButton" mnemonicParsing="false" styleClass="applyFilterButton" text="Apply filters">
               <VBox.margin>
                 <Insets top="10.0" />
               </VBox.margin>
@@ -95,22 +75,23 @@
           </BorderPane.margin>
         </VBox>
       </top>
-      <bottom>
-        <Button fx:id="returnHomeButton" mnemonicParsing="false" text="Return to home" BorderPane.alignment="CENTER_LEFT" />
-      </bottom>
       <BorderPane.margin>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets />
       </BorderPane.margin>
     </BorderPane>
   </left>
   <center>
-    <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+    <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
       <top>
-        <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
           <children>
-            <TextField fx:id="searchBarField" />
-            <Button fx:id="searchBarButton" mnemonicParsing="false" onAction="#search" text="Search" />
+            <TextField fx:id="searchBarField" styleClass="searchBarField" />
+            <Button fx:id="searchBarButton" mnemonicParsing="false" onAction="#search" styleClass="searchBarButton" text="Search">
+            </Button>
           </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
         </HBox>
       </top>
       <BorderPane.margin>
@@ -127,10 +108,8 @@
                 <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
                   <children>
                     <Label text="Search Results" />
-                    <Label fx:id="resultsLabel" layoutX="10.0" layoutY="10.0" text="Found 0 results on &quot;lorem ipsum&quot;">
-                      <font>
-                        <Font size="10.0" />
-                      </font>
+                    <Label fx:id="resultsLabel" layoutX="10.0" layoutY="10.0" styleClass="resultsLabel" text="Found 0 results on &quot;lorem ipsum&quot;">
+
                     </Label>
                     <Separator prefWidth="200.0" />
                   </children>
@@ -139,7 +118,7 @@
               <center>
                 <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
                   <content>
-                    <VBox fx:id="resultsVBox" layoutX="14.0" layoutY="-57.0" prefHeight="200.0" prefWidth="100.0" />
+                    <VBox fx:id="resultsVBox" layoutX="14.0" layoutY="-57.0" prefHeight="200.0" prefWidth="100.0" styleClass="resultsVBox" />
 
                   </content>
                   <BorderPane.margin>
@@ -150,8 +129,8 @@
               <bottom>
                 <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                   <children>
-                    <Button fx:id="previousPaginationButton" mnemonicParsing="false" text="Previous page" />
-                    <Button fx:id="nextPaginationButton" layoutX="215.0" layoutY="10.0" mnemonicParsing="false" text="Next page" />
+                    <Button fx:id="previousPaginationButton" mnemonicParsing="false" styleClass="previousPaginationButton" text="Previous page" />
+                    <Button fx:id="nextPaginationButton" layoutX="215.0" layoutY="10.0" mnemonicParsing="false" styleClass="nextPaginationButton" text="Next page" />
                   </children>
                 </HBox>
               </bottom>

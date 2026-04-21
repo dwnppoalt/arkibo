@@ -1,0 +1,13 @@
+* {
+    -fx-font-family: "Readex Pro";
+}
+
+.readRoot {
+    -fx-background-color: linear-gradient(to bottom, #f4f6f5 0%, #edf1ef 100%);
+}
+
+.readRoot WebView {
+    -fx-font-family: "Readex Pro";
+    -fx-font-size: 12px;
+    -fx-text-fill: #232824;
+}

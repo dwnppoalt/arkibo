@@ -13,7 +13,7 @@ import org.arkibo.utils.Logger;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 
 public class LoginController implements StatefulController {
@@ -24,7 +24,7 @@ public class LoginController implements StatefulController {
     private AuthService authService;
 
     @FXML
-    private VBox login;
+    private BorderPane login;
 
     @FXML
     private Button googleLogin;

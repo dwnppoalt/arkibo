@@ -34,6 +34,9 @@ public class ReadController implements StatefulController {
 
     @FXML
     public void initialize() {
+        readWebview.getStylesheets().add(
+            getClass().getResource("/css/read.css").toExternalForm());
+        
         webEngine = readWebview.getEngine();
 
         webEngine.setOnError(e -> System.err.println("WebEngine error: " + e.getMessage()));
